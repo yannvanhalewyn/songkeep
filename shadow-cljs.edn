@@ -1,0 +1,12 @@
+{;; Remove from this file when using deps.edn
+ :source-paths ["src"]
+ 
+ :dependencies [[reagent "1.0.0"]
+                [re-frame "1.1.2"]]
+ 
+ :builds       {:app {:target           :react-native
+                      :init-fn          songkeep.core/init
+                      :output-dir       "app"
+                      :compiler-options {:infer-externs :auto}
+                      :devtools         {:autoload true
+                                         :preloads [shadow.expo.keep-awake]}}}}
