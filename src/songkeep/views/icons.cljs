@@ -16,3 +16,8 @@
 (defn books [props]
   [:> icons/MaterialCommunityIcons
    (assoc props :name "bookshelf")])
+
+
+(defn numbered-list [props]
+  [:> icons/MaterialCommunityIcons
+   (assoc props :name "format-list-numbered")])

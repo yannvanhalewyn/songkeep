@@ -49,11 +49,11 @@
 (defonce default-cover (js/require "../assets/img/default_cover_64.png"))
 
 
-(defn- section-header [{:keys [title]}]
-  [rn/view {:style {:flex-direction :row
-                    :justify-content :space-between
-                    :align-items :center
-                    :margin-bottom 12}}
+(defn- section-header [{:keys [title style]}]
+  [rn/view {:style (merge style
+                          {:flex-direction :row
+                           :justify-content :space-between
+                           :align-items :center})}
    [rn/text {:style {:font-family "inter-black"
                      :font-size 16
                      :color "black"}}
@@ -61,14 +61,15 @@
 
    [rn/touchable-opacity
     [rn/text {:style {:font-family "inter"
-                      :font-size 16
+                      :font-size 14
                       :color "#33BAF4"}}
      "View all"]]])
 
 
 (defn- recent-tracks-section [{:keys [tracks]}]
   [rn/view
-   [section-header {:title "Recently viewed"}]
+   [section-header {:title "Recently viewed"
+                    :style {:margin-bottom 8}}]
 
    (for [track tracks]
      ^{:key (:songkeep.track/name track)}
@@ -108,7 +109,8 @@
 
 (defn- setlists-section [{:keys [setlists]}]
   [rn/view {:style {:margin-top 24}}
-   [section-header {:title "Setlists"}]
+   [section-header {:title "Setlists"
+                    :style {:margin-bottom 4}}]
 
    (for [setlist setlists]
      ^{:key (:songkeep.setlist/name setlist)}
@@ -133,7 +135,8 @@
          [icons/books {:size 12 :color "#151515"}]
          [rn/text {:style {:font-family "inter"
                            :font-size 12
-                           :color "#151515"}}
+                           :color "#151515"
+                           :margin-left 4}}
           (:songkeep.repertoire/name setlist)]]]
 
        ;; Caret
@@ -141,17 +144,55 @@
         {:size 20 :color "#555555"}]]])])
 
 
+(defn- repertoires-section [{:keys [repertoires]}]
+  [rn/view {:style {:margin-top 24}}
+   [section-header {:title "Repertoires"
+                    :style {:margin-bottom 4}}]
+
+   (for [repertoire repertoires]
+     ^{:key (:songkeep.repertoire/name repertoire)}
+     [rn/touchable-native-feedback
+      {:on-press #(.log js/console "Press" (:songkeep.repertoire/name repertoire))
+       :background (rn/native-feedback-ripple "#efefef" false)}
+      [rn/view {:style {:padding-vertical 12
+                        :border-bottom-width 1
+                        :border-color "#ECECEC"
+                        :flex-direction :row
+                        :justify-content :space-between
+                        :align-items :center}}
+
+       ;; Name and count
+       [rn/view
+        [rn/text {:style {:font-family "inter-semibold"
+                          :font-size 14
+                          :color "#0F0F0F"}}
+         (:songkeep.repertoire/name repertoire)]
+        [rn/view {:style {:flex-direction :row
+                          :align-items :center}}
+         [icons/numbered-list {:size 12 :color "#151515"}]
+         [rn/text {:style {:font-family "inter"
+                           :font-size 12
+                           :color "#151515"
+                           :margin-left 4}}
+          (:songkeep.repertoire/song-count repertoire) " songs"]]]
+
+       ;; Caret
+       [icons/caret-right
+        {:size 20 :color "#555555"}]]])])
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Component
 
 (defn component []
-  (let [{::proto-data/keys [recent-tracks setlists]} proto-data/DATA]
+  (let [{::proto-data/keys [recent-tracks setlists repertoires]}
+        proto-data/DATA]
     [rn/view {:style {:flex 1}} ;; For scroll view
      [rn/status-bar {:background-color "#0FAAEC"}]
 
      ;; Header (logo + search)
      [rn/view {:background-color "#0FAAEC"
-               :style {:padding 32
+               :style {:padding-horizontal 32
+                       :padding-vertical 24
                        :border-bottom-left-radius 8
                        :border-bottom-right-radius 8}}
       [title-logo]
@@ -159,9 +200,10 @@
 
      ;; Sections
      [rn/scroll-view {:bounces true}
-      [rn/scroll-view {:style {:padding 32}}
+      [rn/view {:style {:padding 32}}
        [recent-tracks-section {:tracks recent-tracks}]
-       [setlists-section {:setlists setlists}]]]
+       [setlists-section {:setlists setlists}]
+       [repertoires-section {:repertoires repertoires}]]]
 
      ;; Navigation
      ]))
