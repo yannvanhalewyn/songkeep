@@ -145,7 +145,7 @@
 
 (defn component []
   (let [{::proto-data/keys [recent-tracks setlists]} proto-data/DATA]
-    [rn/view
+    [rn/view {:style {:flex 1}} ;; For scroll view
      [rn/status-bar {:background-color "#0FAAEC"}]
 
      ;; Header (logo + search)
@@ -157,8 +157,10 @@
       [:f> search-input]]
 
      ;; Sections
-     [rn/scroll-view {:style {:padding 32}}
-      [recent-tracks-section {:tracks recent-tracks}]
-      [setlists-section {:setlists setlists}]]
+     [rn/scroll-view {:bounces true}
+      [rn/scroll-view {:style {:padding 32}}
+       [recent-tracks-section {:tracks recent-tracks}]
+       [setlists-section {:setlists setlists}]]]
+
      ;; Navigation
      ]))
