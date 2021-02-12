@@ -72,10 +72,11 @@
 
    (for [track tracks]
      ^{:key (:songkeep.track/name track)}
+     ;; If border desired on ripple, wrap in view with
+     ;; {:border-radius 8 :overflow :hidden}
      [rn/touchable-native-feedback
       {:on-press #(.log js/console "Press" (:songkeep.track/name track))
-       :background (rn/native-feedback-ripple "#efefef" false)
-       :border-radius 8}
+       :background (rn/native-feedback-ripple "#efefef")}
 
       [rn/view {:style {:flex-direction :row
                         :justify-content :space-between
