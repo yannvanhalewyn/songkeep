@@ -14,7 +14,7 @@
                                   :inter font/Inter_400Regular}))]
     (if fonts-loaded
       ;; TODO use safeareaview
-      [home-view/home]
+      [home-view/component]
       [rn/text "Loading Fonts.."])))
 
 (defn start ^:dev/after-load

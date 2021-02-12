@@ -7,6 +7,12 @@
   [:> icons/Ionicons
    (assoc props :name "md-search")])
 
+
 (defn caret-right [props]
   [:> icons/MaterialIcons
    (assoc props :name "keyboard-arrow-right")])
+
+
+(defn books [props]
+  [:> icons/MaterialCommunityIcons
+   (assoc props :name "bookshelf")])
