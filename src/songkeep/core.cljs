@@ -10,6 +10,7 @@
   (let [[fonts-loaded] (font/useFonts
                         (clj->js {:inter-black font/Inter_900Black
                                   :inter-bold font/Inter_700Bold
+                                  :inter-semibold font/Inter_600SemiBold
                                   :inter font/Inter_400Regular}))]
     (if fonts-loaded
       ;; TODO use safeareaview

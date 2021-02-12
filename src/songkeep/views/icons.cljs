@@ -6,3 +6,7 @@
 (defn search [props]
   [:> icons/Ionicons
    (assoc props :name "md-search")])
+
+(defn caret-right [props]
+  [:> icons/MaterialIcons
+   (assoc props :name "keyboard-arrow-right")])
