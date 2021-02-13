@@ -1,5 +1,5 @@
 {;; Remove from this file when using deps.edn
- :source-paths ["src"]
+ :source-paths ["src" "assets"]
  
  :dependencies [[reagent "1.0.0"]
                 [re-frame "1.1.2"]]
